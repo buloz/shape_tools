@@ -1,0 +1,14 @@
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.GeneratedMSBuildEditorConfig.editorconfig
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.AssemblyInfoInputs.cache
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.AssemblyInfo.cs
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.csproj.CoreCompileInputs.cache
+Z:\dev\training\shape_tools\bin\Debug\net9.0\shape_tools.exe
+Z:\dev\training\shape_tools\bin\Debug\net9.0\shape_tools.deps.json
+Z:\dev\training\shape_tools\bin\Debug\net9.0\shape_tools.runtimeconfig.json
+Z:\dev\training\shape_tools\bin\Debug\net9.0\shape_tools.dll
+Z:\dev\training\shape_tools\bin\Debug\net9.0\shape_tools.pdb
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.dll
+Z:\dev\training\shape_tools\obj\Debug\net9.0\refint\shape_tools.dll
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.pdb
+Z:\dev\training\shape_tools\obj\Debug\net9.0\shape_tools.genruntimeconfig.cache
+Z:\dev\training\shape_tools\obj\Debug\net9.0\ref\shape_tools.dll
