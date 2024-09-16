@@ -1,13 +1,23 @@
 
 using System;
 using System.Text.Json;
+using ShapeTools.Models;
 
 namespace ShapeTools.Tools;
 
+/// <summary>
+/// A class responsible for generating random polygons and converting them to GeoJSON format.
+/// This class provides methods to create single polygons or multiple polygons with random shapes and coordinates.
+/// </summary>
 public class ShapeGenerator
 {
     private static Random random = new Random();
 
+    /// <summary>
+    /// Generates a specified number of polygons and returns them as a GeoJSON string.
+    /// </summary>
+    /// <param name="numberOfPolygons">The number of polygons to generate.</param>
+    /// <returns>A GeoJSON string representing the generated polygons.</returns>
     public static string GeneratePolygons(int numberOfPolygons)
     {
         List<Polygon> polygons = new List<Polygon>();
@@ -18,6 +28,10 @@ public class ShapeGenerator
         return polygons.ToGeojson();
     }
 
+    /// <summary>
+    /// Generates a single random polygon.
+    /// </summary>
+    /// <returns>A Polygon object representing the generated polygon.</returns>
     public static Polygon GeneratePolygon()
     {
         int numberOfPoints = random.Next(20, 100); // Between 20 and 100 points for the polygon
@@ -59,7 +73,7 @@ public class ShapeGenerator
             x = Math.Max(-180, Math.Min(180, x));
             y = Math.Max(-90, Math.Min(90, y));
             
-            points.Add(new Coordinate((int)Math.Round(x), (int)Math.Round(y)));
+            points.Add(new Coordinate(x, y));
         }
 
         // Add the first point at the end to close the polygon
@@ -73,6 +87,20 @@ public static class GeneratorExtension
 {
     private static Random random = new Random();
 
+    /// <summary>
+    /// Generates a random color in hexadecimal format.
+    /// </summary>
+    /// <returns>A string representing a color in hexadecimal format.</returns>
+    public static string GenerateRandomColor()
+    {
+        return $"#{random.Next(0x80, 0xFF):X2}{random.Next(0x80, 0xFF):X2}{random.Next(0x80, 0xFF):X2}";
+    }
+
+    /// <summary>
+    /// Converts a list of polygons to GeoJSON format.
+    /// </summary>
+    /// <param name="polygons">The list of polygons to convert.</param>
+    /// <returns>A string representing the polygons in GeoJSON format.</returns>
     public static string ToGeojson(this List<Polygon> polygons)
     {
         var features = polygons.Select(polygon =>
@@ -107,6 +135,8 @@ public static class GeneratorExtension
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
+        var test = JsonSerializer.Serialize(geojson, options);
+        Console.WriteLine(test);
         return JsonSerializer.Serialize(geojson, options);
     }
 }

@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
-            "args": ["GeneratePolygons", "5"],
+            "args": ["generatepolygons", "5"],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -16,7 +16,17 @@
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
-            "args": ["GeneratePolygon"],
+            "args": ["generatepolygon"],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+        {
+            "name": "Union",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
+            "args": ["union", "set_overlapping_2"],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false

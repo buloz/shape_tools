@@ -4,8 +4,17 @@ using System.Text;
 
 namespace ShapeTools.Tools;
 
+/// <summary>
+/// Provides methods for interacting with the system clipboard.
+/// </summary>
 public static class Clipboard
 {
+    
+    /// <summary>
+    /// Asynchronously sets the text content of the clipboard.
+    /// </summary>
+    /// <param name="text">The text to set on the clipboard.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
     public static async Task SetTextAsync(string text, CancellationToken cancellationToken)
     {
         await TryOpenClipboardAsync(cancellationToken);
@@ -13,6 +22,10 @@ public static class Clipboard
         InnerSet(text);
     }
 
+    /// <summary>
+    /// Synchronously sets the text content of the clipboard.
+    /// </summary>
+    /// <param name="text">The text to set on the clipboard.</param>
     public static void SetText(string text)
     {
         TryOpenClipboard();
@@ -20,6 +33,10 @@ public static class Clipboard
         InnerSet(text);
     }
 
+    /// <summary>
+    /// Internal method to set the text content of the clipboard.
+    /// </summary>
+    /// <param name="text">The text to set on the clipboard.</param>
     static void InnerSet(string text)
     {
         EmptyClipboard();
@@ -68,6 +85,10 @@ public static class Clipboard
         }
     }
 
+    /// <summary>
+    /// Asynchronously attempts to open the clipboard.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
     static async Task TryOpenClipboardAsync(CancellationToken cancellationToken)
     {
         var num = 10;
@@ -87,6 +108,9 @@ public static class Clipboard
         }
     }
 
+    /// <summary>
+    /// Synchronously attempts to open the clipboard.
+    /// </summary>
     static void TryOpenClipboard()
     {
         var num = 10;
@@ -106,6 +130,11 @@ public static class Clipboard
         }
     }
 
+    /// <summary>
+    /// Asynchronously retrieves the text content from the clipboard.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>The text content of the clipboard, or null if not available.</returns>
     public static async Task<string?> GetTextAsync(CancellationToken cancellationToken)
     {
         if (!IsClipboardFormatAvailable(cfUnicodeText))
@@ -117,6 +146,10 @@ public static class Clipboard
         return InnerGet();
     }
 
+    /// <summary>
+    /// Synchronously retrieves the text content from the clipboard.
+    /// </summary>
+    /// <returns>The text content of the clipboard, or null if not available.</returns>
     public static string? GetText()
     {
         if (!IsClipboardFormatAvailable(cfUnicodeText))
@@ -128,6 +161,10 @@ public static class Clipboard
         return InnerGet();
     }
 
+    /// <summary>
+    /// Internal method to retrieve the text content from the clipboard.
+    /// </summary>
+    /// <returns>The text content of the clipboard, or null if not available.</returns>
     static string? InnerGet()
     {
         IntPtr handle = default;
@@ -167,6 +204,9 @@ public static class Clipboard
 
     const uint cfUnicodeText = 13;
 
+    /// <summary>
+    /// Throws a Win32Exception with the last Win32 error.
+    /// </summary>
     static void ThrowWin32()
     {
         throw new Win32Exception(Marshal.GetLastWin32Error());

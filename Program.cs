@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using ShapeTools.Models;
+using ShapeTools.Tools;
 
 public class Program
 {
@@ -12,34 +14,26 @@ public class Program
         }
 
         string method = args[0];
-        int numberOfPolygons;
-
-        if (!int.TryParse(args[1], out numberOfPolygons))
-        {
-            Console.WriteLine("The number of polygons must be a valid integer.");
-            return;
-        }
-
-        ShapeGenerator generator = new ShapeGenerator();
 
         try
         {
-            var methodInfo = typeof(ShapeGenerator).GetMethod(method, BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
+            var methodInfo = typeof(Instructions).GetMethod(method, BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
             
             if (methodInfo == null)
             {
-                Console.WriteLine("Method not recognized. Use 'GeneratePolygons' or 'GeneratePolygon'.");
+                Console.WriteLine("Method not recognized. Use 'GeneratePolygons' or 'GeneratePolygon' or 'Union'.");
                 return;
             }
 
             object result;
             if (methodInfo.IsStatic)
             {
-                result = methodInfo.Invoke(null, new object[] { numberOfPolygons });
+                result = methodInfo.Invoke(null, new object[] { args[1] });
             }
             else
             {
-                result = methodInfo.Invoke(generator, new object[] { });
+                result = null;
+                Console.WriteLine("Method not recognized. Use 'GeneratePolygons' or 'GeneratePolygon' or 'Union'.");
             }
 
             Console.WriteLine(result);
