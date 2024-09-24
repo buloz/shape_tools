@@ -3,7 +3,7 @@ namespace ShapeTools.Models;
 /// <summary>
 /// Represents a line segment defined by two coordinates.
 /// </summary>
-public class Segment
+public struct Segment
 {
 
     /// <summary>

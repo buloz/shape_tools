@@ -20,16 +20,27 @@
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
-        }
+        },
         {
-            "name": "Union",
+            "name": "UnionGreinerHormann",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
-            "args": ["union", "set_overlapping_2"],
+            "args": ["UnionGreinerHormann", "set_overlapping_2"],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "UnionByGraph",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
+            "args": ["UnionByGraph", "set_overlapping_2"],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
         }
     ]
+    
 }

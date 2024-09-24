@@ -35,9 +35,19 @@ public static class Instructions
     /// Performs a union operation on two polygons read from a specified file.
     /// </summary>
     /// <param name="fileName">The name of the file containing the polygons.</param>
-    public static string Union(string fileName)
+    public static string UnionByGraph(string fileName)
     {
         List<Polygon> polygons = Serialization.DeserializePolygons(Path.Combine(Directory.GetCurrentDirectory(), $"Resources/{fileName}.geojson"));
-        return new List<Polygon> { polygons[0].Union(polygons[1]) }.ToGeojson();
+        return new List<Polygon> { polygons[0].UnionByGraph(polygons[1]) }.ToGeojson();
+    }
+
+    /// <summary>
+    /// Performs a union operation on two polygons read from a specified file.
+    /// </summary>
+    /// <param name="fileName">The name of the file containing the polygons.</param>
+    public static string UnionGreinerHormann(string fileName)
+    {
+        List<Polygon> polygons = Serialization.DeserializePolygons(Path.Combine(Directory.GetCurrentDirectory(), $"Resources/{fileName}.geojson"));
+        return new List<Polygon> { polygons[0].UnionGreinerHormann(polygons[1]) }.ToGeojson();
     }
 }
