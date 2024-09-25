@@ -38,7 +38,7 @@ public static class Instructions
     public static string UnionByGraph(string fileName)
     {
         List<Polygon> polygons = Serialization.DeserializePolygons(Path.Combine(Directory.GetCurrentDirectory(), $"Resources/{fileName}.geojson"));
-        return new List<Polygon> { polygons[0].UnionByGraph(polygons[1]) }.ToGeojson();
+        return new List<Polygon> { GeometryLibrary.UnionByGraph(polygons.ToArray()) }.ToGeojson();
     }
 
     /// <summary>

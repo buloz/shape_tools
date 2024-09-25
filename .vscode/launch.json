@@ -36,7 +36,7 @@
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/net9.0/shape_tools.dll",
-            "args": ["UnionByGraph", "set_overlapping_2"],
+            "args": ["UnionByGraph", "set_overlapping_3"],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false

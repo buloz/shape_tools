@@ -143,43 +143,28 @@ public static class GeometryLibrary
     /// <param name="polygon2">The second polygon.</param>
     /// <returns>A new polygon resulting from the union of the two input polygons.</returns>
     /// <exception cref="ArgumentNullException">Thrown if either polygon is null.</exception>
-    public static Polygon UnionByGraph(this Polygon polygon1, Polygon polygon2)
+    public static Polygon UnionByGraph(Polygon[] polygons)
     {
-        if (polygon1 == null || polygon2 == null)
+        if (polygons == null || !polygons.Any())
         {
             throw new ArgumentNullException("Polygons cannot be null");
         }
 
-        polygon1.IntersectsDetails(polygon2);
-
-        Graph graph = new()
+        // Find all intersections between all polygons
+        for (int i = 0; i < polygons.Length; i++)
         {
-            Root = new Node()
+            for (int j = i + 1; j < polygons.Length; j++)
             {
-                Self = polygon1.Points[0],
-                Children = new List<Node>(),
-            },
-            KeyToNode = new Dictionary<double, Node>()
-        };
-
-        graph.KeyToNode.Add(Graph.CoordinateToKey(polygon1.Points[0]), graph.Root);
-
-        Node currentNode = graph.Root;
-
-        foreach (var point in polygon1.Points.Skip(1))
-        {
-            currentNode.Children.Add(new Node()
-            {
-                Self = point,
-                Children = new List<Node>(),
-            });
-            //todo: check if key exists
-            graph.KeyToNode.Add(Graph.CoordinateToKey(point), currentNode.Children.Last());
-            currentNode = currentNode.Children.Last();
+                polygons[i].IntersectsDetails(polygons[j]);
+            }
         }
 
-        currentNode.Children.Add(graph.Root);
-        InsertInGraph(polygon2, graph);
+        Graph graph = CreateInitialGraph(polygons[0]);
+
+        foreach(Polygon polygon in polygons)
+        {
+            InsertInGraph(polygon, graph);
+        }
 
         return graph.ToPolygon();
     }
@@ -231,6 +216,37 @@ public static class GeometryLibrary
 
         return currentNode;
     }
+
+    private static Graph CreateInitialGraph(Polygon polygon)
+    {
+        Graph graph = new()
+        {
+            Root = new Node()
+            {
+                Self = polygon.Points[0],
+                Children = new List<Node>(),
+            },
+            KeyToNode = new Dictionary<double, Node>()
+        };
+
+        graph.KeyToNode.Add(Graph.CoordinateToKey(polygon.Points[0]), graph.Root);
+
+        Node currentNode = graph.Root;
+
+        foreach (var point in polygon.Points.Skip(1))
+        {
+            currentNode.Children.Add(new Node()
+            {
+                Self = point,
+                Children = new List<Node>(),
+            });
+            graph.KeyToNode.Add(Graph.CoordinateToKey(point), currentNode.Children.Last());
+            currentNode = currentNode.Children.Last();
+        }
+
+        currentNode.Children.Add(graph.Root);
+        return graph;
+    }
 #endregion Graph
 }
 
@@ -278,10 +294,13 @@ public struct Graph
         var polygon = new Polygon();
         var currentNode = Root;
         var rootKey = CoordinateToKey(Root.Self);
+        var visitedNodes = new HashSet<double>();
         polygon.Points.Add(currentNode.Self);
         var vecCurrent = new Vector2(0,1);
         while (true)
         {
+            visitedNodes.Add(CoordinateToKey(currentNode.Self));
+
             int maxIndex = 0;
             float maxAngle = -1.0f;
 
@@ -299,8 +318,10 @@ public struct Graph
                     maxAngle = angle;
                 }
             }
+
+            double nextKey = CoordinateToKey(currentNode.Children[maxIndex].Self);
             
-            if(CoordinateToKey(currentNode.Children[maxIndex].Self) == rootKey)
+            if(nextKey == rootKey || visitedNodes.Contains(nextKey))
             {
                 break;
             }
